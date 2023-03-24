@@ -11,6 +11,15 @@
   import { get } from "svelte/store";
   import { onDestroy } from "svelte";
 
+  import { toolTipContent } from "$lib/util";
+
+  let m = { x: 0, y: 0, w: 0, h: 0 };
+
+  function handleMousemove(event: MouseEvent) {
+    m.x = event.pageX;
+    m.y = event.pageY;
+  }
+
   let value: string | null = null;
   if ($page.params.slug) {
     value = get(page).params.slug;
@@ -53,7 +62,16 @@
   />
 </svelte:head>
 
-<div class="flexy">
+<div class="flexy" on:mousemove={handleMousemove}>
+  {#if $toolTipContent.hovered}
+    <div
+      class="tooltip"
+      bind:clientWidth={m.w}
+      style="top: {m.y + m.h + 20}px; left: {Math.max(m.x - m.w / 2, 0)}px;"
+    >
+      {@html $toolTipContent.content}
+    </div>
+  {/if}
   <div class="top-app-bar-container">
     <TopAppBar variant="static" prominent={false} dense={false} color="primary">
       <Row class="top-app-bar-row">
@@ -105,7 +123,25 @@
   .flexy {
     width: 100%;
     height: 100%;
+    position: relative;
   }
+  .tooltip {
+    position: absolute;
+    display: inline-block;
+    z-index: 10;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 1px #ddd;
+    background: white;
+    border-radius: 4px;
+    padding: 4px;
+    position: absolute;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    overflow: visible !important;
+    white-space: normal !important;
+    max-width: 750px;
+  }
+
   .top-app-bar-container {
     width: 100%;
   }

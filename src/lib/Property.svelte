@@ -6,25 +6,30 @@
   export let noLookup: boolean = false;
 
   $: prop = getProperty(url, noLookup);
+  $: content = `
+<p>
+  Short for ${$prop.url}
+</p>
+${!!$prop.description ? "<p>" + $prop.description + "</p>" : ""}`;
 </script>
 
-  <Tooltip>
-    <span>
-      {$prop.name}
-    </span>
-    <svelte:fragment slot="tip">
-      <div class="tip">
+<Tooltip {content}>
+  <span>
+    {$prop.name}
+  </span>
+  <svelte:fragment slot="tip">
+    <div class="tip">
+      <p>
+        Short for {$prop.url}
+      </p>
+      {#if $prop.description}
         <p>
-          Short for {$prop.url}
+          {$prop.description}
         </p>
-        {#if $prop.description}
-          <p>
-            {$prop.description}
-          </p>
-        {/if}
-      </div>
-    </svelte:fragment>
-  </Tooltip>
+      {/if}
+    </div>
+  </svelte:fragment>
+</Tooltip>
 
 <style>
   .tip {

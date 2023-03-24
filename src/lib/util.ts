@@ -2,6 +2,10 @@ import { DataFactory, NamedNode, Parser, Quad } from "n3";
 import * as jsonld from 'jsonld';
 import { ContextParser } from "jsonld-context-parser";
 import { addContext } from "./properties";
+import { writable } from "svelte/store";
+
+export type ToolTipContent = { content: string, hovered: boolean };
+export const toolTipContent = writable({ content: "", hovered: false });
 
 type RecordOf<TKey extends any[], TValue> = Record<TKey[number], TValue>;
 
