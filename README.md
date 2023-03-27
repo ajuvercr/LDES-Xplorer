@@ -1,28 +1,21 @@
-# create-svelte
+# LDES Xplorer
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+> This name is not great, please fix.
 
-## Creating a project
+This is a simple site that lets people browse through Linked Data Event Streams.
+It tries to make everything clear for _normal_ people, whoever they may be.
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+People are expected to just click around on the tiles and be amazed by the carried LDES members.
+It also tries to interpret some predicates by dereferencing the URI and hoping to find something that explains the URI.  
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm run dev
 ```
 
 ## Building
@@ -35,4 +28,18 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Deploy
+
+The node adaptor is configured.
+
+Build
+```bash
+npm run release
+```
+
+Run
+```bash
+bin/production.sh
+```
+

@@ -16,16 +16,12 @@ const contexts: JsonLdContextNormalized[] = [];
 async function setup() {
   const myParser = new ContextParser();
   const ctx = await myParser.parse("http://prefix.cc/context.jsonld");
-  console.log(ctx);
   contexts.push(ctx);
 }
 
 try {
-
-setup()
-} catch(ex: any) {
-
-}
+  setup()
+} catch (ex: any) { }
 
 async function curl(url: string): Promise<Quad[]> {
   const parsed = new URL(url);
