@@ -21,27 +21,29 @@
 </script>
 
 <svelte:window on:keydown={input} />
-<div class="body">
-  <Textfield
-    bind:value
-    label="LDES to eXplore"
-    style="min-width: 500px; width: 80%;"
-  />
-  <Fab
-    on:click={enter}
-    disabled={value === ""}
-    color="primary"
-    mini
-    class="solo-fab"
-  >
-    <Icon class="material-icons">arrow_forward</Icon>
-  </Fab>
+<div class="container">
+  <div class="body">
+    <Textfield
+      bind:value
+      label="LDES to explore"
+      style="min-width: 500px; width: 80%;"
+    />
+    <Fab
+      on:click={enter}
+      disabled={value === ""}
+      color="primary"
+      mini
+      class="solo-fab"
+    >
+      <Icon class="material-icons">arrow_forward</Icon>
+    </Fab>
+  </div>
 </div>
 
 <style lang="postcss">
   .body {
     margin: auto;
-    margin-top: 30%;
+    padding-top: 400px;
     display: flex;
     width: 100%;
     height: 100%;

@@ -46,6 +46,7 @@
 </script>
 
 <svelte:head>
+  <title>Xplorer - LDES</title>
   <link
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet"
@@ -76,9 +77,7 @@
     <TopAppBar variant="static" prominent={false} dense={false} color="primary">
       <Row class="top-app-bar-row">
         <Section>
-          <Title on:click={() => goto("/")}
-            ><div class="title">LDES eXplorer</div></Title
-          >
+          <Title class="title" on:click={() => goto("/")}></Title>
           {#if $page.params.slug}
             <div class="searchField">
               <Paper class="solo-paper" elevation={2}>
@@ -103,19 +102,13 @@
 
           <slot name="topbar" />
         </Section>
-        <Section align="end" toolbar>
-          <IconButton class="material-icons" aria-label="Bookmark this page">
-            check
-          </IconButton>
-          <IconButton class="material-icons" aria-label="Bookmark this page">
-            bookmark
-          </IconButton>
-        </Section>
       </Row>
     </TopAppBar>
   </div>
-  <div class="main">
-    <slot />
+  <div class="main-container">
+    <div class="main">
+      <slot />
+    </div>
   </div>
 </div>
 
@@ -125,6 +118,15 @@
     height: 100%;
     position: relative;
   }
+
+  * :global(.title) {
+    width: 500px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(/ldes-logo.svg);
+    height: 100%;
+  }
+
   .tooltip {
     position: absolute;
     display: inline-block;
@@ -150,9 +152,10 @@
     max-width: 1600px;
     margin: auto;
   }
-  .title {
+  * :global(.title) {
     cursor: pointer;
   }
+
   .main {
     width: 80%;
     max-width: 1400px;

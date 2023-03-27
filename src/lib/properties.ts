@@ -20,7 +20,12 @@ async function setup() {
   contexts.push(ctx);
 }
 
+try {
+
 setup()
+} catch(ex: any) {
+
+}
 
 async function curl(url: string): Promise<Quad[]> {
   const parsed = new URL(url);
