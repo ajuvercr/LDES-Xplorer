@@ -3,7 +3,7 @@
   import Relation from "$lib/Relation.svelte";
   import View from "$lib/View.svelte";
   import LayoutGrid, { Cell } from "@smui/layout-grid";
-  import LinearProgress from '@smui/linear-progress';
+  import LinearProgress from "@smui/linear-progress";
   import Members from "$lib/Members.svelte";
 
   import type { Quad, Term } from "n3";
@@ -11,7 +11,7 @@
   import { onMount } from "svelte";
   import { page } from "$app/stores";
 
-  let loading = true;
+  let loading = false;
 
   type LdesRelation = {
     ty: string;
@@ -75,6 +75,7 @@
   }
 
   async function loadData(slug: string) {
+    loading = true;
     let triples: Quad[] = [];
     let members: Term[] = [];
     let views: LdesView[] = [];
@@ -107,6 +108,7 @@
       error = ex;
     }
 
+    loading = false;
     return {
       triples,
       error,
@@ -126,15 +128,12 @@
     views = data.views;
     members = data.members;
     triples = data.triples;
-
-    loading = false;
   };
 
   onMount(async () => {
     await loadData($page.params.slug).then(setData);
 
     return page.subscribe((page) => {
-      loading = true;
       loadData(page.params.slug).then(setData);
     });
   });
