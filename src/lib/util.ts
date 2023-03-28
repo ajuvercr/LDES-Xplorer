@@ -113,6 +113,7 @@ export const RDFS = createUriAndTermNamespace('http://www.w3.org/2000/01/rdf-sch
 export async function curlQuads(url: string, init?: RequestInit, mfetch?: typeof fetch): Promise<Quad[]> {
   if (!url) return [];
   try {
+
     const f = mfetch || fetch;
     const doc = await f(url, init);
     const docText = await doc.text();

@@ -1,6 +1,5 @@
 <script lang="ts">
   import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
-  import IconButton from "@smui/icon-button";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
 
