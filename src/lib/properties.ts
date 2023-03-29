@@ -15,7 +15,7 @@ const contexts: JsonLdContextNormalized[] = [];
 
 async function setup() {
   const myParser = new ContextParser();
-  const ctx = await myParser.parse("http://prefix.cc/context.jsonld");
+  const ctx = await myParser.parse("https://prefix.cc/context.jsonld");
   contexts.push(ctx);
 }
 
