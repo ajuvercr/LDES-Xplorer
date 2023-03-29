@@ -110,13 +110,24 @@ export const RDFS = createUriAndTermNamespace('http://www.w3.org/2000/01/rdf-sch
   'subClassOf'
 );
 
+async function tryCurlQuads(url: string, init?: RequestInit, mfetch?: typeof fetch): Promise<string> {
+  const f = mfetch || fetch;
+  const doc = await f(url, init);
+  return await doc.text();
+}
+
 export async function curlQuads(url: string, init?: RequestInit, mfetch?: typeof fetch): Promise<Quad[]> {
   if (!url) return [];
-  try {
+  const parsed_url = new URL(url);
 
-    const f = mfetch || fetch;
-    const doc = await f(url, init);
-    const docText = await doc.text();
+  let docText = parsed_url.hostname === "localhost" ? await tryCurlQuads(url, init, mfetch) : await tryCurlQuads("/api/" + encodeURIComponent(url), init, mfetch);
+  // try {
+  //   docText = await tryCurlQuads(url, init, mfetch);
+  // } catch (ex: any) {
+  //   docText = await tryCurlQuads("/api/" + encodeURIComponent(url), init, mfetch);
+  // }
+
+  try {
     let quads;
     try {
       quads = new Parser({ baseIRI: url }).parse(docText);
@@ -128,6 +139,7 @@ export async function curlQuads(url: string, init?: RequestInit, mfetch?: typeof
       const things = await jsonld.toRDF(json, { format: "application/n-quads" });
       quads = new Parser({ baseIRI: url }).parse(<string><any>things);
     }
+
     if (!quads) {
       throw "Failed to parse quads";
     }

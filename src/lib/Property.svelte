@@ -1,39 +1,39 @@
 <script lang="ts">
   import Tooltip from "./Tooltip.svelte";
-  import { getProperty } from "./properties";
+  import { getProperty, type Property } from "./properties";
 
   export let url: string;
   export let noLookup: boolean = false;
 
+  function getContent(prop: Property): string | void {
+    if (prop.url === prop.name && !prop.description) {
+      return;
+    }
+
+    let content = "";
+
+    if (prop.url !== prop.name) {
+      content += `<p>Short for ${prop.url}</p>`;
+    }
+
+    if (prop.description) {
+      content += `<p>${prop.description}</p>`;
+    }
+
+    return content;
+  }
+
   $: prop = getProperty(url, noLookup);
-  $: content = `
-<p>
-  Short for ${$prop.url}
-</p>
-${!!$prop.description ? "<p>" + $prop.description + "</p>" : ""}`;
+  $: content = getContent($prop);
 </script>
 
-<Tooltip {content}>
-  <span>
-    {$prop.name}
-  </span>
-  <svelte:fragment slot="tip">
-    <div class="tip">
-      <p>
-        Short for {$prop.url}
-      </p>
-      {#if $prop.description}
-        <p>
-          {$prop.description}
-        </p>
-      {/if}
-    </div>
-  </svelte:fragment>
-</Tooltip>
+{#if content}
+  <Tooltip {content}>
+    <span>
+      {$prop.name}
+    </span>
+  </Tooltip>
+{:else}
+  {$prop.name}
+{/if}
 
-<style>
-  .tip {
-    width: max-content;
-    max-width: 750px;
-  }
-</style>

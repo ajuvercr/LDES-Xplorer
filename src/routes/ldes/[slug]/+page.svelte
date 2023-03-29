@@ -84,7 +84,7 @@
 
     try {
       triples = await curlQuads(
-        "/api/" + encodeURIComponent(slug),
+        slug,
         { headers: { accept: "application/ld+json, text/turtle" } },
         fetch
       );
@@ -131,14 +131,12 @@
   };
 
   onMount(async () => {
-    await loadData($page.params.slug).then(setData);
+    // await loadData($page.params.slug).then(setData);
 
     return page.subscribe((page) => {
       loadData(page.params.slug).then(setData);
     });
   });
-
-  // onDestroy(unsub);
 </script>
 
 <div class="accordion-container">

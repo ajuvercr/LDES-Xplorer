@@ -33,7 +33,7 @@ async function curl(url: string): Promise<Quad[]> {
     return curls[easyUrl];
   }
   console.log("Looking for", easyUrl);
-  curls[easyUrl] = curlQuads("/api/" + encodeURIComponent(easyUrl));
+  curls[easyUrl] = curlQuads(easyUrl);
 
   return curls[easyUrl];
 }
