@@ -29,11 +29,12 @@
 
 {#if content}
   <Tooltip {content}>
-    <span>
+    <span on:click>
       {$prop.name}
     </span>
   </Tooltip>
 {:else}
-  {$prop.name}
+  <span on:click>
+    {$prop.name}
+  </span>
 {/if}
-

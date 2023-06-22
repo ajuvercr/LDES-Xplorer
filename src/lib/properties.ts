@@ -15,7 +15,7 @@ const contexts: JsonLdContextNormalized[] = [];
 
 async function setup() {
   const myParser = new ContextParser();
-  const ctx = await myParser.parse("https://prefix.cc/context.jsonld");
+  const ctx = await myParser.parse("http://prefix.cc/context.jsonld");
   contexts.push(ctx);
 }
 
@@ -32,6 +32,7 @@ async function curl(url: string): Promise<Quad[]> {
     console.log("Cached curl!", easyUrl);
     return curls[easyUrl];
   }
+
   console.log("Looking for", easyUrl);
   curls[easyUrl] = curlQuads(easyUrl);
 
@@ -74,7 +75,6 @@ async function getInfo(url: string, st: Writable<Property>, noLookup: boolean) {
       }
     }
   } catch (ex: any) {
-    throw ex;
   }
 }
 
