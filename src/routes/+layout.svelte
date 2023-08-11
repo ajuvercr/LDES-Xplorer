@@ -13,6 +13,28 @@
   import { toolTipContent } from "$lib/util";
 
   let m = { x: 0, y: 0, w: 0, h: 0 };
+  let localHover = false;
+
+  toolTipContent.subscribe(() => {
+    localHover = true;
+  });
+
+  function mouseEnter() {
+    console.log("localHover", localHover);
+    localHover = true;
+  }
+
+  function mouseOver() {
+    if (!localHover) {
+      console.log("localHover", localHover);
+      localHover = true;
+    }
+  }
+
+  function mouseLeave() {
+    console.log("localHover", localHover);
+    localHover = false;
+  }
 
   function handleMousemove(event: MouseEvent) {
     m.x = event.pageX;
@@ -63,11 +85,17 @@
 </svelte:head>
 
 <div class="flexy" on:mousemove={handleMousemove}>
-  {#if $toolTipContent.hovered}
+  {#if $toolTipContent.hovered || localHover}
     <div
       class="tooltip"
-      bind:clientWidth={m.w}
-      style="top: {m.y + m.h + 20}px; left: {Math.max(m.x - m.w / 2, 0)}px;"
+      on:focus={mouseEnter}
+      on:mouseover={mouseOver}
+      on:mouseleave={mouseLeave}
+      style="top: {$toolTipContent.y + $toolTipContent.height - 1}px;
+      left: {Math.max(
+        $toolTipContent.x,
+        0
+      )}px;"
     >
       {@html $toolTipContent.content}
     </div>
@@ -76,7 +104,7 @@
     <TopAppBar variant="static" prominent={false} dense={false} color="primary">
       <Row class="top-app-bar-row">
         <Section>
-          <Title class="title" on:click={() => goto("/")}></Title>
+          <Title class="title" on:click={() => goto("/")} />
           {#if $page.params.slug}
             <div class="searchField">
               <Paper class="solo-paper" elevation={2}>

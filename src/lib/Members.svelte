@@ -99,8 +99,8 @@
     <Row>
       {#each thisData.fields as field}
         {#if deepFields.has(field)}
-          <Cell style="overflow: visible; background-color: #5252cf; cursor: pointer;"
-            ><Property on:click={() => pushPath(field)} url={field} /></Cell
+          <Cell on:click={() => pushPath(field)} style="overflow: visible; background-color: #5252cf; cursor: pointer;"
+            ><Property url={field} /></Cell
           >
         {:else}
           <Cell style="overflow: visible"><Property url={field} /></Cell>

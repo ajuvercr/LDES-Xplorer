@@ -13,11 +13,11 @@
     let content = "";
 
     if (prop.url !== prop.name) {
-      content += `<p>Short for ${prop.url}</p>`;
+      content += `<a href="${prop.url}" target="_blank">Short for ${prop.url}</a>`;
     }
 
     if (prop.description) {
-      content += `<p>${prop.description}</p>`;
+      content += `<a href="${prop.url}" target="_blank">${prop.description}</a>`;
     }
 
     return content;
@@ -34,7 +34,9 @@
     </span>
   </Tooltip>
 {:else}
-  <span on:click>
-    {$prop.name}
-  </span>
+  <a href={$prop.url} target="_blank">
+    <span on:click>
+      {$prop.name}
+    </span>
+  </a>
 {/if}

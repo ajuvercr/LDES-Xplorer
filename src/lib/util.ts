@@ -5,7 +5,7 @@ import { addContext } from "./properties";
 import { writable } from "svelte/store";
 
 export type ToolTipContent = { content: string, hovered: boolean };
-export const toolTipContent = writable({ content: "", hovered: false });
+export const toolTipContent = writable({ content: "", hovered: false, x: 0, y: 0, height: 0, width: 0 });
 
 type RecordOf<TKey extends any[], TValue> = Record<TKey[number], TValue>;
 
